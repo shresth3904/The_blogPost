@@ -18,10 +18,11 @@ def get_db_connection():
     return conn
 
 class User(UserMixin):
-    def __init__(self, id, username, password):
+    def __init__(self, id, username, password, is_admin):
         self.id = id
         self.username = username
         self.password = password
+        self.is_admin = is_admin
 
     def get_id(self):
         return str(self.id)
@@ -33,7 +34,7 @@ def load_user(user_id):
     user_data = conn.execute('SELECT * FROM users WHERE id = ?', (user_id,)).fetchone()
     conn.close()
     if user_data:
-        return User(id=user_data['id'], username=user_data['username'], password=user_data['password'])
+        return User(id=user_data['id'], username=user_data['username'], password=user_data['password'], is_admin=user_data['is_admin'])
     return None
 
 def init_db():
@@ -143,8 +144,12 @@ def submit():
 def dashboard():
     con = sqlite3.connect("database.db")
     cur = con.cursor()
-    cur.execute("SELECT id, title,author, created_at FROM blog WHERE user_id = ? ORDER BY created_at DESC", (current_user.id,))
+    if current_user.is_admin == 1:
+        cur.execute("SELECT blog.id, title ,author, created_at, username FROM blog JOIN users ON blog.user_id = users.id ORDER BY created_at DESC")
+    else:
+        cur.execute("SELECT id, title,author, created_at, user_id FROM blog WHERE user_id = ? ORDER BY created_at DESC", (current_user.id,))
     blogs = cur.fetchall()
+    
     con.close()
     html = render_template("dash_board.html", blogs = blogs, current_user = current_user)
     return html
@@ -246,7 +251,7 @@ def login():
         conn.close()
 
         if user_data and check_password_hash(user_data['password'], password):
-            user = User(id=user_data['id'], username=user_data['username'], password=user_data['password'])
+            user = User(id=user_data['id'], username=user_data['username'], password=user_data['password'], is_admin=user_data['is_admin'])
             login_user(user)
             return redirect(url_for('dashboard'))
         
@@ -285,7 +290,7 @@ def signup():
             user_data = conn.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
             conn.close()
             if user_data and check_password_hash(user_data['password'], password):
-                user = User(id=user_data['id'], username=user_data['username'], password=user_data['password'])
+                user = User(id=user_data['id'], username=user_data['username'], password=user_data['password'], is_admin=user_data['is_admin'])
                 login_user(user)
                 return redirect(url_for('dashboard'))
         except sqlite3.IntegrityError:
@@ -350,7 +355,48 @@ def search_blog():
     print(tags_dict)
     html = render_template("search_res.html", blogs = blogs, tags_dict = tags_dict, all_ids = all_ids, img_dict = img_dict, blog_tags_dict = blog_tags_dict, current_user = current_user)
     return html
+
+
+@app.route("/manage_users")
+@login_required
+def manage_users():
+    con = sqlite3.connect("database.db")
+    cur = con.cursor()
+    cur.execute("SELECT id, username, is_admin FROM users")
+    users = cur.fetchall()
+    con.close()
+    html = render_template("manage_users.html", users = users, current_user = current_user)
+    return html
+
+@app.route("/delete_user", methods = ["POST"])
+@login_required
+def delete_user():
+    user_id = request.form.get("user_id")
+    con = sqlite3.connect("database.db")
+    cur = con.cursor()
+    cur.execute("DELETE FROM users WHERE id = ?", (user_id,))
+    cur.execute("DELETE FROM blog WHERE user_id = ?", (user_id,))
+    con.commit()
+    con.close()
+    return redirect(url_for("manage_users"))
     
+@app.route("/promote_user", methods = ["POST"])    
+def promote_user():
+    user_id = request.form.get("user_id")
+    is_admin = request.form.get("is_admin")
+    con = sqlite3.connect("database.db")
+    cur = con.cursor()
+    
+    if is_admin == '1':
+        cur.execute("UPDATE users SET is_admin = 0 WHERE id = ?", (user_id,))
+    else:
+        cur.execute("UPDATE users SET is_admin = 1 WHERE id = ?", (user_id,))
+    con.commit()
+    con.close()
+    return redirect(url_for("manage_users"))
+
+
+
 if __name__ == "__main__":
     init_db()
     app.run(debug = True)
