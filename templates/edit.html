@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Post</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='edit.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <form action="{{ url_for('update') }}" method="POST">
+                <h1>Edit Post</h1>
+                <div class="title-underline"></div>
+                
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" placeholder="Enter the post title" value="{{ blog[0] }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea id="content" name="content" placeholder="Write your blog content here..." rows="20" cols="50" required>{{ blog[1] }}</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <input type="text" id="author" name="author" placeholder="Author's name" value="{{ blog[2] }}" required>
+                </div>
+                <input type="hidden" name="id" value="{{ blog_id }}">
+                <div class="form-group">
+                    <label for="tags">Tags</label>
+                    <input type="text" id="tags" name="tags" placeholder="e.g., AI, Technology, Future" value="{{ tags }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="img_url">Image URL</label>
+                    <input type="text" id="img_url" name="img_url" placeholder="https://example.com/image.jpg" value="{{ img }}" required>
+                </div>
+                
+                <input type="submit" value="Save changes">
+            </form>
+        </div>
+
+        <div class="delete_comments">
+            <h2>COMMENTS</h2>
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="comment_box">
+                        <div class="comment_value">
+                        <p style = "font-size:15;" >{{ comment[0] }}</p>
+                        <h7 style = "font-size:12;" >By: {{ comment[1] }}</h7>
+                    </div>
+                    <div class="delete_button">
+                        <form action="{{ url_for('delete_comment') }}" method="POST">
+                            <input type="hidden" name="blog_id" value="{{ blog_id }}">
+                            <input  type="hidden" name="comment_id" value="{{ comment[2] }}">
+                            <input type="submit" value="Delete Comment">
+                        </form>
+                    </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <br><br>
+                <p>No comments available.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

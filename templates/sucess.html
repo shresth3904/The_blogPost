@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Successful</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            background-color: #121212;
+            color: #EAEAEA;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .success-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #1E1E1E;
+            padding: 40px 50px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            transform: scale(0.95);
+            animation: fadeInScale 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+
+        @keyframes fadeInScale {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px auto;
+        }
+
+        .success-icon .circle {
+            stroke-dasharray: 233;
+            stroke-dashoffset: 233;
+            animation: draw-circle 0.8s 0.2s ease-out forwards;
+        }
+
+        .success-icon .checkmark {
+            stroke-dasharray: 60;
+            stroke-dashoffset: 60;
+            animation: draw-checkmark 0.4s 0.8s ease-out forwards;
+        }
+
+        @keyframes draw-circle {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        @keyframes draw-checkmark {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            color: #FFFFFF;
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #AAAAAA;
+            margin-bottom: 35px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: #FF4500;
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            background-color: #E03D00;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(200, 200, 200, 0.1);
+            transform: translateY(-2px);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <svg class="success-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+            <circle class="circle" fill="none" stroke="#00FFAA" stroke-width="4" cx="40" cy="40" r="37"/>
+            <polyline class="checkmark" fill="none" stroke="#00FFAA" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" points="24,41 36,53 58,29"/>
+        </svg>
+        <h1>Success!</h1>
+        <p>Your blog post has been {{status}}.</p>
+        <div class="button-group">
+            <a href="{{url_for('dashboard')}}" class="btn btn-primary">Dashboard</a>
+            <a href="{{url_for('index')}}" class="btn btn-secondary">Return Home</a>
+        </div>
+    </div>
+</body>
+</html>

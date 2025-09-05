@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Page</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            background-color: #121212;
+            color: #EAEAEA;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #1E1E1E;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        form h1 {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        form .title-underline {
+            width: 100px;
+            height: 3px;
+            background-color: #FF4500;
+            margin: 0 auto 30px auto;
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #AAAAAA;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: #252525;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #EAEAEA;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        input[type="text"]::placeholder,
+        textarea::placeholder {
+            color: #666;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            background-color: #FF4500;
+            border: none;
+            border-radius: 8px;
+            color: #FFFFFF;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #E03D00;
+            transform: translateY(-2px);
+        }
+
+        input[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form action="{{ url_for('submit') }}" method="POST">
+            <h1>Create New Post</h1>
+            <div class="title-underline"></div>
+            
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" placeholder="Enter the post title" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea id="content" name="content" placeholder="Write your blog content here..." required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="author">Author</label>
+                <input type="text" id="author" name="author" placeholder="Author's name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="tags">Tags</label>
+                <input type="text" id="tags" name="tags" placeholder="e.g., AI, Technology, Future">
+            </div>
+
+            <div class="form-group">
+                <label for="img_url">Image URL</label>
+                <input type="text" id="img_url" name="img_url" placeholder="https://example.com/image.jpg" >
+            </div>
+            
+            <input type="submit" value="Submit Post">
+        </form>
+    </div>
+</body>
+</html>

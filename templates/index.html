@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html>
+    <head lang = "en">
+        <meta name ="viewport" content = "initail-scale = 1, width = device-width">
+        <link href = "{{ url_for('static', filename='style.css') }}" rel = "stylesheet">
+        <title>BLOG</title>
+    </head>
+    <body>
+        <div class = "top">
+            <a class = "left" href = "{{url_for('index')}}">The BlogPost</a>
+            <div class = "nav_links">
+                {% if current_user.is_authenticated %}
+                    <a class = "right" href="{{ url_for('dashboard') }}">Dashboard</a>
+                    <a class = "right" href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                    <a class = "right" href="{{ url_for('login') }}">Login</a>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div id = "main_page">
+        <header>
+            
+                <form id = "searchForm" action = "{{url_for('search_blog')}}" >
+                    <div class = "search_mobile">
+                    <input autocomplete = "off" type = "search" id = "search_bar" name = "q" placeholder = "Search for blogs..." >
+                    <button onclick = "search_blog()">🔍︎</button>
+                    </div>
+                </form>
+            
+            <div id = "suggestions">
+            </div>
+            <h1>The Blog Post</h1>
+        </header>
+        <main>
+            <br>
+            <div class = "tag_group">
+                <p id = "tag" class = "tag" onclick = "clear_tags()"> #TAGS</p>
+                {% for tag in tags_dict.keys() %}
+                    <div class = "tag_categories" id = "{{tag}}" onclick = "show('{{tag}}')">{{tag}}</div>
+                {% endfor %}
+               
+                
+            </div>
+            <div class = "description">
+                <h2>Showing top results:</h2>
+            </div>
+            <div class = "blog_group"  id = "blog_group">
+                {%if blogs%}
+                {% for blog in blogs %}
+                <div class = "blog" onclick = "fetch_blog('{{blog[0]}}')" id = "{{blog[0]}}">
+                    <img src = "{{img_dict[blog[0]]}}" onerror="setDefaultImage(this);" width = "300px" >
+                    <h2>{{blog[1]}}</h2>
+                    <div id = "tags_display">
+                        {% for tag in blog_tags_dict[blog[0]] %}
+                            <div class = "single_tag">{{tag}}</div>
+                        {% endfor %}
+                    </div>
+                    {% set slice_index = 200 - 2 * blog[1]|length %}
+                    {% if slice_index < 10 %}
+                        {% set slice_index = 10 %}
+                    {% endif %}
+                    <p>{{blog[2][:slice_index] + '...'}}</p>
+                    
+                </div>
+                {% endfor %}
+                {% else %}
+                    <h2 class = "description">No blogs to show.</h2>
+                {% endif %}
+                
+            </div>
+            
+        </main>
+        <div id = "footer" class = "footer" >
+        <div class = "footer_content">
+            <div class = "link_box">
+            <div class = "quick_links" style = "color:white;">
+                <h1>Quick Links</h1>
+                <ul>
+                    <li><a class = "links" href = "{{url_for('index')}}">Home</a></li>
+                    <li><a class = "links" href = "{{url_for('dashboard')}}">Dashboard</a></li>
+                    {% if current_user.is_authenticated %}
+                        <li><a class = "links" href = "{{url_for('logout')}}">Logout</a></li>
+                    {% else %}
+                        <li><a class = "links" href = "{{url_for('login')}}">Login</a></li>
+                        <li><a class = "links" href = "{{url_for('signup')}}">Signup</a></li>
+                    {% endif %}
+                    <li><a class = "links" href = "{{url_for('submit')}}">Post new blog</a></li>
+                </ul>
+            </div>
+        </div>
+            <div class = "quote">
+                <p style = "text-align:center; color:white;">" Don't focus on having a great blog. Focus on producing a <br>blog that's great for your readers. "<br> - Brian Clark</p>
+            </div>
+        </div>
+        <div class = "footer_bottom">
+            <a href = "https://www.linkedin.com/in/shresth-65ab02304/" style = "color:white;">LinkedIn</a>
+            <a href = "https://github.com/shresth3904" style = "color:white;">Github</a>
+            <p style = "text-align:center; color:white;">&copy; 2025 The BlogPost. All rights reserved.</p>
+        </div>
+        </div>
+        <script>
+            let homeUrl = "{{ url_for('index') }}";
+            let blogUrl = "{{ url_for('blog') }}";
+            const all = {{ all_ids | tojson | safe }};
+            let tags = {{ tags_dict | tojson | safe }};
+            console.log(tags);
+            function setDefaultImage(imageElement) {
+                imageElement.onerror = null; // Prevent infinite loop
+                imageElement.src = "{{ url_for('static', filename='blog.png') }}";
+            }
+        </script>
+        <script src = "{{url_for('static', filename = 'script.js')}}"></script>
+
+    </body>
+    
+</html>

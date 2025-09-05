@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        
+        :root {
+            --bg-color: #0A0A0A;
+            --card-color: #1C1C1E;
+            --text-color: #E0E0E0;
+            --accent-color-1: darkred;
+            --accent-color-2: tomato;
+            --input-color: #2C2C2E;
+            --border-color: #3A3A3C;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .login-container {
+            background-color: var(--card-color);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .login-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            font-weight: 400;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: var(--input-color);
+            color: var(--text-color);
+            transition: border-color 0.3s, box-shadow 0.3s;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: var(--accent-color-1);
+            box-shadow: 0 0 10px rgba(79, 0, 0, 0.5);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            background-image: linear-gradient(45deg, var(--accent-color-1), var(--accent-color-2));
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            box-shadow: 0 4px 15px rgba(70, 0, 0, 0.3);
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(137, 0, 0, 0.4);
+        }
+
+        .register-link {
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .register-link a {
+            color: var(--accent-color-1);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .register-link a:hover {
+            color: var(--accent-color-2);
+        }
+
+        .error-msg {
+            color: #dc3545;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 500px) {
+            .login-container {
+                padding: 30px 20px;
+                border-radius: 0;
+                box-shadow: none;
+                height: 100vh;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1 class="logo">THE BLOG POST</h1>
+        <h2>Create your account</h2>
+        <form method="POST" action="/signup">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit" class="login-button">Sign Up</button>
+        </form>
+
+        <p class="register-link">Already have an account? <a href="/login">Login here</a></p>
+        <p class="error-msg">{{ signup_msg }}</p>
+    </div>
+</body>
+</html>

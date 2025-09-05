@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link rel = "stylesheet" href = "{{url_for('static', filename = 'style.css')}}">
+</head>
+    <body id = "dashboard_body">
+        <div class = "top">
+            <a class = "left" href = "{{url_for('index')}}">The BlogPost</a>
+            <div class = "nav_links">
+                {% if current_user.is_authenticated %}
+                    <a class = "right" href="{{ url_for('index') }}">Home</a>
+                    <a class = "right" href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                    <a class = "right" href="{{ url_for('login') }}">Login</a>
+                {% endif %}
+            </div>
+        </div>
+
+    <div class = "dashboard" id = "dashboard">
+        <h1 style = "font-family:Arial;color: white; text-align: center; padding-top: 20px;">DASHBOARD</h1>
+    </div>
+
+        {% if not blogs %}
+            <div class ="no_blogs" style = "height: 100px;">
+            <h2 style = "color: white; text-align: center;">No blogs to show. Create one!</h2>
+            <div class = "dashboard_options">
+                <a class = "submit" href = "{{url_for('submit')}}"> + ADD NEW POST</a><br>
+            </div>
+            </div>
+        {% else %}
+            <div class = "dashboard_options">
+                <a class = "submit" href = "{{url_for('submit')}}"> + ADD NEW POST</a>
+            </div>
+            <div class = "blog_interface">
+            {% for blog in blogs %}
+            <div class = "blogs_container">
+                <div onclick = "fetch_blog('{{blog[0]}}')" class = "blog_interface_blog">
+                        <h2 style = "color: white;">{{blog[1]}}</h2>
+                        <p style = "color: white;">By {{blog[2]}} on {{blog[3]}}</p>
+                </div>
+                    <div class = "options" style = "text-align: center;">
+                        
+                        <form method = "GET" action = "/edit">
+                            <input type="hidden" name="id" value="{{blog[0]}}">
+                            <button class = "blog_btn2" id = "delete" href = "">✎ EDIT</button>
+                        </form>
+                        <form method = "POST" action = "/delete">
+                            <input type="hidden" name="id" value="{{blog[0]}}">
+                            <button class = "blog_btn1" id = "delete" href = ""> 🗑 DELETE</button>
+                        </form>
+                    </div>
+            </div>
+            {% endfor %}
+            </div>
+        {% endif %}
+        
+    </div>
+    <div id = "footer" class = "footer" >
+        <div class = "footer_content">
+            <div class = "link_box">
+            <div class = "quick_links" style = "color:white;">
+                <h1>Quick Links</h1>
+                <ul>
+                    <li><a class = "links" href = "{{url_for('index')}}">Home</a></li>
+                    <li><a class = "links" href = "{{url_for('dashboard')}}">Dashboard</a></li>
+                    {% if current_user.is_authenticated %}
+                        <li><a class = "links" href = "{{url_for('logout')}}">Logout</a></li>
+                    {% else %}
+                        <li><a class = "links" href = "{{url_for('login')}}">Login</a></li>
+                        <li><a class = "links" href = "{{url_for('signup')}}">Signup</a></li>
+                    {% endif %}
+                    <li><a class = "links" href = "{{url_for('submit')}}">Post new blog</a></li>
+                </ul>
+            </div>
+        </div>
+            <div class = "quote">
+                <p style = "text-align:center; color:white;">" Don't focus on having a great blog. Focus on producing a <br>blog that's great for your readers. "<br> - Brian Clark</p>
+            </div>
+        </div>
+        <div class = "footer_bottom">
+            <a  href = "https://www.linkedin.com/in/shresth-65ab02304/" style = "color:white;">LinkedIn</a>
+            <a href = "https://github.com/shresth3904" style = "color:white;">Github</a>
+            <p style = "text-align:center; color:white;">&copy; 2025 The BlogPost. All rights reserved.</p>
+        </div>
+        </div>
+    <script>
+        let blogUrl = "{{ url_for('blog') }}";
+        function fetch_blog(id){
+            window.location.href = blogUrl + "?id=" + encodeURIComponent(id);
+        }
+    </script>
+</body>
+</html>
