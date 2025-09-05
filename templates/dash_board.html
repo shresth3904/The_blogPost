@@ -23,24 +23,24 @@
     <div class = "dashboard" id = "dashboard">
         <h1 style = "font-family:Arial;color: white; text-align: center; padding-top: 20px;">DASHBOARD</h1>
     </div>
-
-        {% if not blogs %}
-            <div class ="no_blogs" style = "height: 100px;">
-            <h2 style = "color: white; text-align: center;">No blogs to show. Create one!</h2>
-            <div class = "dashboard_options">
-                <a class = "submit" href = "{{url_for('submit')}}"> + ADD NEW POST</a><br>
+        <div class = "dashboard_options">
+                <a class = "submit" href = "{{url_for('submit')}}"> + ADD NEW POST</a>
+                {% if current_user.is_admin == 1 %}<a class = "manage_users" href = "{{url_for('manage_users')}}"> MANAGE USERS</a>{% endif %}
+                <p style= "font-family:sans serif;color:white;margin-left:20px;"> Logged in as: <b>{{current_user.username}}</b> {% if current_user.is_admin == 1 %}(admin){% endif %}</p>
             </div>
+        {% if not blogs %}
+            <div class ="no_blogs" style = "display:flex;height: 100px;">
+            <h2 style = "color: white; text-align: center;">No blogs to show. Create one!</h2>
+
             </div>
         {% else %}
-            <div class = "dashboard_options">
-                <a class = "submit" href = "{{url_for('submit')}}"> + ADD NEW POST</a>
-            </div>
             <div class = "blog_interface">
             {% for blog in blogs %}
             <div class = "blogs_container">
                 <div onclick = "fetch_blog('{{blog[0]}}')" class = "blog_interface_blog">
                         <h2 style = "color: white;">{{blog[1]}}</h2>
-                        <p style = "color: white;">By {{blog[2]}} on {{blog[3]}}</p>
+                        <p style = "color: white;">By {{blog[2]}} on {{blog[3]}} {% if current_user.is_admin == 1 %}<br> Username: {{blog[4]}}{% endif %}</p>
+                        
                 </div>
                     <div class = "options" style = "text-align: center;">
                         

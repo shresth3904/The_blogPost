@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users Page</title>
+    <style>
+        :root {
+            --background-color: #121212;
+            --surface-color: #1e1e1e;
+            --text-color: #e0e0e0;
+            --link-color: #ff6347; /* Tomato */
+            --highlight-color: #ff4500; /* Reddish Orange */
+            --delete-btn-bg: #8b0000; /* Dark Red */
+            --promote-btn-bg: #4caf50; /* Green (for contrast) */
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: var(--surface-color);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--link-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+            color: var(--highlight-color);
+        }
+
+        /* User List Items */
+        .users-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .user-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            background-color: #2a2a2a; /* Slightly lighter shade for contrast */
+            border: 1px solid #333;
+            border-radius: 6px;
+            gap: 10px;
+        }
+
+        .user-info {
+            font-size: 1.1em;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+        }
+
+        .user-info span.admin-tag {
+            color: var(--link-color);
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+        
+        /* Buttons */
+        .user-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .user-actions form {
+            width: 100%;
+            margin: 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        button.delete-btn {
+            background-color: var(--delete-btn-bg);
+        }
+        
+        button.delete-btn:hover {
+            background-color: #a01a1a;
+        }
+
+        button.promote-btn {
+            background-color: var(--promote-btn-bg);
+        }
+        
+        button.promote-btn:hover {
+            background-color: #409244;
+        }
+
+        button.demote-btn {
+            background-color: var(--highlight-color);
+            color: var(--surface-color);
+        }
+
+        button.demote-btn:hover {
+            background-color: #ff6347;
+        }
+        
+        /* No Users Found Message */
+        .no-users {
+            text-align: center;
+            font-style: italic;
+            color: #999;
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 600px) {
+            .user-item {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .user-info {
+                width: auto;
+                text-align: left;
+            }
+            
+            .user-actions {
+                flex-direction: row;
+                width: auto;
+            }
+            
+            .user-actions form {
+                width: auto;
+            }
+
+            button {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MANAGE USERS</h1>
+        <a class="back-link" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+        
+        {% if users %}
+            <div class="users-list">
+                {% for user in users %}
+                    <div class="user-item">
+                        <div class="user-info">
+                            {{ user[1] }}{% if user[2] == 1 %}<span class="admin-tag">(admin)</span>{% endif %}
+                        </div>
+                        <div class="user-actions">
+                            <form method="POST" action="/delete_user">
+                                <input type="hidden" name="user_id" value="{{ user[0] }}">
+                                <button type="submit" class="delete-btn">Delete User</button>
+                            </form>
+                            <form method="POST" action="/promote_user">
+                                <input type="hidden" name="user_id" value="{{ user[0]}}">
+                                <input type="hidden" name="is_admin" value="{{ user[2]}}">
+                                <button type="submit" class="{% if user[2] == 1 %}demote-btn{% else %}promote-btn{% endif %}">
+                                    {% if user[2] == 1 %}Remove Admin{% else %}Make Admin{% endif %}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="no-users">No users found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

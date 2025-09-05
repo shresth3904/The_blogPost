@@ -42,6 +42,20 @@ body{
     text-decoration: none;
     margin-left: 20px;
 }
+
+.manage_users{
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+    display: inline-block;
+    background-color:grey;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
 .blog_interface{
 
     display:flex;
@@ -61,7 +75,7 @@ body{
     flex-direction: column;
     align-items: center;
     border-radius: 50px;
-    margin:15px;
+    margin:25px;
 }
 
 .blogs_container:hover{
@@ -75,7 +89,7 @@ body{
     width: 300px;
     margin: 20px;
     padding: 10px 20px 20px 20px;
-    border-radius: 50px 50px 0px 0px;
+    border-radius: 5px 5px 0px 0px;
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
         "Lucida Sans", Arial, sans-serif;
     margin-bottom: 0px;
@@ -110,7 +124,6 @@ body{
     justify-content: center;
     margin:20px; 
     margin-top: 0px;
-    border-radius: 0px 0px 50px 50px;
     align-items: center;
     padding: 0px 0px 0px 0px;
 }
