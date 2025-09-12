@@ -24,7 +24,7 @@ The BlogPost is a robust web application designed to provide a complete blogging
 -   **Powerful Search**: Instantly find blogs by searching for keywords in titles or content.
 -   **Tag Filtering**: Click on a tag to see all related posts, making topic discovery easy.
 -   **Engage with Comments**: Read and leave comments on blog posts to join the conversation.
--   **Responsive Design**: Enjoy a seamless experience on any device, from desktops to smartphones.
+-   **Responsive Design**: Seamless experience on any device, from desktops to smartphones.
 
 ### For Writers ✍️
 
@@ -38,7 +38,7 @@ The BlogPost is a robust web application designed to provide a complete blogging
 -   **Admin Dashboard**: A central hub for site management.
 -   **User Management**: View all registered users, promote standard users to admins, demote admins, and delete user accounts.
 -   **Content Moderation**: Edit or delete *any* blog post on the platform.
--   **Comment Control**: Delete *any* comment on *any* blog post to maintain community standards.
+-   **Comment Control**: Delete *any* comment on *any* blog post.
 
 ---
 
