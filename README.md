@@ -4,7 +4,7 @@ A dynamic and full-featured blog platform built with Flask. The BlogPost allows 
 
 ![Project Screenshot](./assets/homepage.png)
 
-**[https://theblogpost.pythonanywhere.com/]**; 
+**[Live deployment](https://theblogpost.pythonanywhere.com/)**
 
 ---
 
