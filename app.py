@@ -374,9 +374,10 @@ def delete_user():
     user_id = request.form.get("user_id")
     con = sqlite3.connect("database.db")
     cur = con.cursor()
-    cur.execute("DELETE FROM users WHERE id = ?", (user_id,))
-    cur.execute("DELETE FROM blog WHERE user_id = ?", (user_id,))
-    con.commit()
+    if int(user_id) != 1:
+        cur.execute("DELETE FROM users WHERE id = ?", (user_id,))
+        cur.execute("DELETE FROM blog WHERE user_id = ?", (user_id,))
+        con.commit()
     con.close()
     return redirect(url_for("manage_users"))
     
@@ -387,7 +388,7 @@ def promote_user():
     con = sqlite3.connect("database.db")
     cur = con.cursor()
     
-    if is_admin == '1':
+    if is_admin == '1' and int(user_id) != 1:
         cur.execute("UPDATE users SET is_admin = 0 WHERE id = ?", (user_id,))
     else:
         cur.execute("UPDATE users SET is_admin = 1 WHERE id = ?", (user_id,))
