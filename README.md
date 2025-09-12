@@ -16,7 +16,7 @@ The BlogPost is a dynamic platform for creating and sharing content. Readers can
 
 ## Technologies Used
 
-- **Backend**: Flask (Python)
+- **Backend**: Flask (Python), Jinja
 - **Frontend**: HTML, CSS, JavaScript
 - **Database**: SQLite
 - **Authentication**: Flask-Login
