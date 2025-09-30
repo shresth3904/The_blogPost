@@ -12,7 +12,7 @@ A dynamic and full-featured blog platform built with Flask. The BlogPost allows 
 
 ## About The Project
 
-The BlogPost is a robust web application designed to provide a complete blogging experience. It serves as an excellent portfolio piece demonstrating proficiency in backend development with Flask, database management with SQLite, and frontend integration using the Jinja templating engine. The project emphasizes secure user authentication, role-based access control, and a clean, responsive user interface.
+The BlogPost is a robust web application designed to provide a complete blogging experience. It serves development with Flask, database management with SQLite, and frontend integration using the Jinja templating engine. The project emphasizes secure user authentication, role-based access control, and a clean, responsive user interface.
 
 ---
 
