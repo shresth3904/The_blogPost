@@ -66,7 +66,7 @@ Make sure you have Python 3 and pip installed on your system.
 
 1.  **Clone the Repository**
     ```bash
-    git clone [https://github.com/shresth3904/The_blogPost.git](https://github.com/shresth3904/The_blogPost.git)
+    git clone https://github.com/shresth3904/The_blogPost.git
     cd The_blogPost
     ```
 
